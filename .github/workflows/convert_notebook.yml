@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -22,7 +24,7 @@ jobs:
 
       - name: Convert notebook to HTML
         run: |
-          jupyter nbconvert --to html ChiSq_Test_with_GEMS.ipynb --output-dir=docs
+          jupyter nbconvert --to html ChiSq_Test_with_GEMS.ipynb --output docs/index.html
 
       - name: Commit HTML file
         env:
