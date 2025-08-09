@@ -24,7 +24,7 @@ jobs:
 
       - name: Convert notebook to HTML
         run: |
-          jupyter nbconvert --to html ChiSq_Test_with_GEMS.ipynb --output-dir=docs
+          jupyter nbconvert --to html ChiSq_Test_with_GEMS.ipynb --output docs/index.html
 
       - name: Commit HTML file
         env:
