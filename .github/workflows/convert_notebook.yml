@@ -25,9 +25,11 @@ jobs:
           jupyter nbconvert --to html ChiSq_Test_with_GEMS.ipynb --output-dir=docs
 
       - name: Commit HTML file
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add docs/
           git commit -m "Auto-update HTML" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
