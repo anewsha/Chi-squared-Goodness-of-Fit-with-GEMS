@@ -1,0 +1,33 @@
+name: Convert Notebook to HTML
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Jupyter and nbconvert
+        run: pip install notebook nbconvert
+
+      - name: Convert notebook to HTML
+        run: |
+          jupyter nbconvert --to html ChiSq_Test_with_GEMS.ipynb --output-dir=docs
+
+      - name: Commit HTML file
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add docs/
+          git commit -m "Auto-update HTML" || echo "No changes to commit"
+          git push
